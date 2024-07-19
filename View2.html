@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body style="height: 100%; margin: 0">
+        <div id="container" style="height: 100%"></div>
+        <script type="text/javascript" src="https://registry.npmmirror.com/jquery/3.7.1/files/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="https://registry.npmmirror.com/echarts/5.5.1/files/dist/echarts.min.js"></script>
+        <script type="text/javascript">
+            var dom = document.getElementById('container');
+            var myChart = echarts.init(dom, null, {
+                renderer: 'canvas',
+                useDirtyRect: false
+            });
+            var app = {};
+            var option;
+
+            myChart.showLoading();
+            var image = '<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">\n' + ' <defs>\n' + '  <filter height="200%" width="200%" y="-50%" x="-50%" id="svg_1_blur">\n' + '   <feGaussianBlur stdDeviation="0.7" in="SourceGraphic"/>\n' + '  </filter>\n' + ' </defs>\n' + ' <g>\n' + '  <title>Layer 1</title>\n' + '  <g opacity="0.7" id="svg_8">\n' + '   <path filter="url(#svg_1_blur)" stroke="#000" id="svg_1" d="m409.86748,277.89777l50.5,-195.52957l50.5,195.52957l-25.25,0l0,196.47042l-50.49999,0l0,-196.47042l-25.25,0z" fill="#fff"/>\n' + '   <ellipse ry="60.5" rx="60.5" id="svg_3" cy="150.5" cx="293.5" stroke="#000" fill="#4c4c4c"/>\n' + '   <ellipse ry="42" rx="42" id="svg_4" cy="308" cx="293.5" stroke="#000" fill="#4c4c4c"/>\n' + '   <ellipse ry="26" rx="24" id="svg_6" cy="434" cx="293.5" stroke="#000" fill="#4c4c4c"/>\n' + '   <text transform="rotate(-89.7048 459.625 311.487) matrix(2.20745 0 0 1.32391 -502.324 -99.3838)" stroke="#000" font-weight="bold" xml:space="preserve" text-anchor="start" font-family="\'Andada Pro\'" font-size="24" stroke-width="0" id="svg_7" y="318.86327" x="392.07571" fill="#000000">Finance</text>\n' + '  </g>\n' + ' </g>\n' + '</svg>';
+            let data = {
+                "counties": ["Beijing", "Tianjin", "Hebei", "Shanxi", "Inner Mongolia", "Liaoning", "Jilin", "Heilongjiang", "Shanghai", "Jiangsu", "Zhejiang", "Anhui", "Fujian", "Jiangxi", "Shandong", "Henan", "Hubei", "Hunan", "Guangdong", "Guangxi", "Hainan", "Chongqing", "Sichuan", "Guizhou", "Yunnan", "Tibet", "Shaanxi", "Gansu", "Qinghai", "Ningxia", "Xinjiang"],
+                "timeline": [2011, 2010, 2009, 2008, 2007, 2006, 2005, 2004, 2003, 2002],
+                "series": [[[16251.93, 1074.93, 2215.41, "Beijing", 2011], [11307.28, 411.46, 756.5, "Tianjin", 2011], [24515.76, 918.02, 746.01, "Hebei", 2011], [11237.55, 224.91, 519.32, "Shanxi", 2011], [14359.88, 384.76, 447.46, "Inner Mongolia", 2011], [22226.7, 876.12, 755.57, "Liaoning", 2011], [10568.83, 238.61, 207.65, "Jilin", 2011], [12582.0, 492.1, 370.78, "Heilongjiang", 2011], [19195.69, 1019.68, 2277.4, "Shanghai", 2011], [49110.27, 2747.89, 2600.11, "Jiangsu", 2011], [32318.85, 1677.13, 2730.29, "Zhejiang", 2011], [15300.65, 634.92, 503.85, "Anhui", 2011], [17560.18, 911.16, 862.41, "Fujian", 2011], [11702.82, 402.51, 357.44, "Jiangxi", 2011], [45361.85, 1838.14, 1640.41, "Shandong", 2011], [26931.03, 987.0, 868.2, "Henan", 2011], [19632.26, 634.67, 674.57, "Hubei", 2011], [19669.56, 518.04, 501.09, "Hunan", 2011], [53210.28, 3321.31, 2916.13, "Guangdong", 2011], [11720.87, 465.68, 445.37, "Guangxi", 2011], [2522.66, 208.71, 105.24, "Hainan", 2011], [10011.37, 396.28, 704.66, "Chongqing", 2011], [21026.68, 620.62, 868.15, "Sichuan", 2011], [5701.84, 160.3, 297.27, "Guizhou", 2011], [8893.12, 222.31, 456.23, "Yunnan", 2011], [605.83, 17.44, 31.7, "Tibet", 2011], [12512.3, 398.03, 432.11, "Shaanxi", 2011], [5020.37, 134.25, 145.05, "Gansu", 2011], [1670.44, 29.05, 62.56, "Qinghai", 2011], [2102.21, 79.01, 134.18, "Ningxia", 2011], [6610.05, 176.22, 288.77, "Xinjiang", 2011]], [[14113.58, 1006.52, 1863.61, "Beijing", 2010], [9224.46, 377.59, 572.99, "Tianjin", 2010], [20394.26, 697.79, 615.42, "Hebei", 2010], [9200.86, 192.0, 448.3, "Shanxi", 2010], [11672.0, 309.25, 346.44, "Inner Mongolia", 2010], [18457.27, 733.37, 639.27, "Liaoning", 2010], [8667.58, 212.32, 190.12, "Jilin", 2010], [10368.6, 391.89, 304.59, "Heilongjiang", 2010], [17165.98, 1002.5, 1950.96, "Shanghai", 2010], [41425.48, 2600.95, 2105.92, "Jiangsu", 2010], [27722.31, 1618.17, 2326.58, "Zhejiang", 2010], [12359.33, 532.17, 396.17, "Anhui", 2010], [14737.12, 679.03, 767.58, "Fujian", 2010], [9451.26, 340.56, 241.49, "Jiangxi", 2010], [39169.92, 1622.15, 1361.45, "Shandong", 2010], [23092.36, 773.23, 697.68, "Henan", 2010], [15967.61, 564.41, 561.27, "Hubei", 2010], [16037.96, 464.21, 463.16, "Hunan", 2010], [46013.06, 2813.95, 2658.76, "Guangdong", 2010], [9569.85, 405.79, 384.53, "Guangxi", 2010], [2064.5, 188.33, 78.12, "Hainan", 2010], [7925.58, 266.38, 496.56, "Chongqing", 2010], [17185.48, 558.56, 654.7, "Sichuan", 2010], [4602.16, 139.64, 231.51, "Guizhou", 2010], [7224.18, 223.45, 375.08, "Yunnan", 2010], [507.46, 14.54, 27.08, "Tibet", 2010], [10123.48, 315.95, 384.75, "Shaanxi", 2010], [4120.75, 110.02, 100.54, "Gansu", 2010], [1350.43, 25.41, 54.53, "Qinghai", 2010], [1689.65, 60.53, 97.87, "Ningxia", 2010], [5437.47, 143.44, 225.2, "Xinjiang", 2010]], [[12153.03, 1062.47, 1603.63, "Beijing", 2009], [7521.85, 308.73, 461.2, "Tianjin", 2009], [17235.48, 612.4, 525.67, "Hebei", 2009], [7358.31, 173.31, 361.64, "Shanxi", 2009], [9740.25, 286.65, 291.1, "Inner Mongolia", 2009], [15212.49, 605.27, 560.2, "Liaoning", 2009], [7278.75, 200.14, 180.83, "Jilin", 2009], [8587.0, 301.18, 227.54, "Heilongjiang", 2009], [15046.45, 1237.56, 1804.28, "Shanghai", 2009], [34457.3, 2025.39, 1596.98, "Jiangsu", 2009], [22990.35, 1316.84, 1899.33, "Zhejiang", 2009], [10062.82, 497.94, 359.6, "Anhui", 2009], [12236.53, 656.61, 612.2, "Fujian", 2009], [7655.18, 305.9, 165.1, "Jiangxi", 2009], [33896.65, 1329.59, 1044.9, "Shandong", 2009], [19480.46, 622.98, 499.92, "Henan", 2009], [12961.1, 546.11, 479.11, "Hubei", 2009], [13059.69, 400.11, 402.57, "Hunan", 2009], [39482.56, 2470.63, 2283.29, "Guangdong", 2009], [7759.16, 348.98, 336.82, "Guangxi", 2009], [1654.21, 121.76, 65.73, "Hainan", 2009], [6530.01, 229.09, 389.97, "Chongqing", 2009], [14151.28, 548.14, 524.63, "Sichuan", 2009], [3912.68, 136.15, 194.44, "Guizhou", 2009], [6169.75, 205.14, 351.74, "Yunnan", 2009], [441.36, 13.28, 23.17, "Tibet", 2009], [8169.8, 239.92, 336.21, "Shaanxi", 2009], [3387.56, 101.37, 88.27, "Gansu", 2009], [1081.27, 23.05, 45.63, "Qinghai", 2009], [1353.31, 47.56, 75.54, "Ningxia", 2009], [4277.05, 115.23, 198.87, "Xinjiang", 2009]], [[11115.0, 844.59, 1519.19, "Beijing", 2008], [6719.01, 227.88, 368.1, "Tianjin", 2008], [16011.97, 513.81, 420.74, "Hebei", 2008], [7315.4, 166.04, 290.91, "Shanxi", 2008], [8496.2, 273.3, 219.09, "Inner Mongolia", 2008], [13668.58, 500.81, 455.07, "Liaoning", 2008], [6426.1, 182.7, 147.24, "Jilin", 2008], [8314.37, 244.47, 177.43, "Heilongjiang", 2008], [14069.87, 939.34, 1414.21, "Shanghai", 2008], [30981.98, 1626.13, 1298.48, "Jiangsu", 2008], [21462.69, 1052.03, 1653.45, "Zhejiang", 2008], [8851.66, 431.27, 313.81, "Anhui", 2008], [10823.01, 506.98, 497.65, "Fujian", 2008], [6971.05, 281.96, 130.57, "Jiangxi", 2008], [30933.28, 1104.95, 880.28, "Shandong", 2008], [18018.53, 512.42, 413.83, "Henan", 2008], [11328.92, 526.88, 393.05, "Hubei", 2008], [11555.0, 340.07, 334.32, "Hunan", 2008], [36796.71, 2057.45, 1972.4, "Guangdong", 2008], [7021.0, 282.96, 249.01, "Guangxi", 2008], [1503.06, 95.6, 47.33, "Hainan", 2008], [5793.66, 191.21, 303.01, "Chongqing", 2008], [12601.23, 453.63, 411.14, "Sichuan", 2008], [3561.56, 104.81, 151.55, "Guizhou", 2008], [5692.12, 195.48, 277.66, "Yunnan", 2008], [394.85, 15.08, 22.42, "Tibet", 2008], [7314.58, 193.27, 287.16, "Shaanxi", 2008], [3166.82, 93.8, 72.49, "Gansu", 2008], [1018.62, 19.96, 36.54, "Qinghai", 2008], [1203.92, 38.85, 64.8, "Ningxia", 2008], [4183.21, 89.79, 171.97, "Xinjiang", 2008]], [[9846.81, 821.5, 1302.77, "Beijing", 2007], [5252.76, 183.44, 288.17, "Tianjin", 2007], [13607.32, 467.97, 347.65, "Hebei", 2007], [6024.45, 134.12, 218.73, "Shanxi", 2007], [6423.18, 191.01, 148.3, "Inner Mongolia", 2007], [11164.3, 410.43, 386.34, "Liaoning", 2007], [5284.69, 153.03, 126.03, "Jilin", 2007], [7104.0, 225.81, 155.48, "Heilongjiang", 2007], [12494.01, 958.06, 1209.08, "Shanghai", 2007], [26018.48, 1365.71, 1054.25, "Jiangsu", 2007], [18753.73, 981.42, 1251.43, "Zhejiang", 2007], [7360.92, 366.57, 223.85, "Anhui", 2007], [9248.53, 511.5, 385.84, "Fujian", 2007], [5800.25, 225.96, 101.34, "Jiangxi", 2007], [25776.91, 953.69, 734.9, "Shandong", 2007], [15012.46, 447.44, 302.31, "Henan", 2007], [9333.4, 409.65, 337.27, "Hubei", 2007], [9439.6, 301.8, 260.14, "Hunan", 2007], [31777.01, 2029.77, 1705.08, "Guangdong", 2007], [5823.41, 239.45, 190.73, "Guangxi", 2007], [1254.17, 67.19, 34.43, "Hainan", 2007], [4676.13, 196.06, 247.46, "Chongqing", 2007], [10562.39, 376.84, 359.11, "Sichuan", 2007], [2884.11, 93.19, 122.25, "Guizhou", 2007], [4772.52, 193.59, 168.55, "Yunnan", 2007], [341.43, 13.24, 11.51, "Tibet", 2007], [5757.29, 153.98, 231.03, "Shaanxi", 2007], [2703.98, 83.52, 61.6, "Gansu", 2007], [797.35, 16.98, 27.67, "Qinghai", 2007], [919.11, 29.49, 51.05, "Ningxia", 2007], [3523.16, 91.28, 149.22, "Xinjiang", 2007]], [[8117.78, 658.3, 982.37, "Beijing", 2006], [4462.74, 156.64, 186.87, "Tianjin", 2006], [11467.6, 397.14, 284.04, "Hebei", 2006], [4878.61, 117.01, 169.63, "Shanxi", 2006], [4944.25, 136.5, 108.21, "Inner Mongolia", 2006], [9304.52, 318.54, 303.41, "Liaoning", 2006], [4275.12, 131.01, 100.75, "Jilin", 2006], [6211.8, 194.7, 74.17, "Heilongjiang", 2006], [10572.24, 773.61, 825.2, "Shanghai", 2006], [21742.05, 1017.91, 653.25, "Jiangsu", 2006], [15718.47, 794.41, 906.37, "Zhejiang", 2006], [6112.5, 281.98, 166.01, "Anhui", 2006], [7583.85, 435.22, 243.9, "Fujian", 2006], [4820.53, 184.67, 79.75, "Jiangxi", 2006], [21900.19, 786.51, 524.94, "Shandong", 2006], [12362.79, 348.7, 219.72, "Henan", 2006], [7617.47, 294.73, 174.99, "Hubei", 2006], [7688.67, 254.81, 204.72, "Hunan", 2006], [26587.76, 1722.07, 899.91, "Guangdong", 2006], [4746.16, 192.2, 129.14, "Guangxi", 2006], [1065.67, 44.45, 16.37, "Hainan", 2006], [3907.23, 158.2, 213.7, "Chongqing", 2006], [8690.24, 336.2, 299.5, "Sichuan", 2006], [2338.98, 80.24, 89.43, "Guizhou", 2006], [3988.14, 165.92, 143.62, "Yunnan", 2006], [290.76, 11.92, 6.44, "Tibet", 2006], [4743.61, 125.2, 152.25, "Shaanxi", 2006], [2277.35, 73.21, 50.51, "Gansu", 2006], [648.5, 15.17, 23.69, "Qinghai", 2006], [725.9, 25.53, 36.99, "Ningxia", 2006], [3045.26, 68.9, 99.25, "Xinjiang", 2006]], [[6969.52, 493.73, 840.2, "Beijing", 2005], [3905.64, 122.67, 147.4, "Tianjin", 2005], [10012.11, 330.87, 213.47, "Hebei", 2005], [4230.53, 106.0, 135.07, "Shanxi", 2005], [3905.03, 98.75, 72.52, "Inner Mongolia", 2005], [8047.26, 256.77, 232.85, "Liaoning", 2005], [3620.27, 112.29, 83.63, "Jilin", 2005], [5513.7, 163.34, 35.03, "Heilongjiang", 2005], [9247.66, 715.97, 675.12, "Shanghai", 2005], [18598.69, 799.73, 492.4, "Jiangsu", 2005], [13417.68, 688.86, 686.32, "Zhejiang", 2005], [5350.17, 231.66, 127.05, "Anhui", 2005], [6554.69, 331.8, 186.12, "Fujian", 2005], [4056.76, 171.88, 69.55, "Jiangxi", 2005], [18366.87, 664.9, 448.36, "Shandong", 2005], [10587.42, 298.19, 181.74, "Henan", 2005], [6590.19, 217.17, 127.32, "Hubei", 2005], [6596.1, 215.63, 162.37, "Hunan", 2005], [22557.37, 1430.37, 661.81, "Guangdong", 2005], [3984.1, 165.05, 91.93, "Guangxi", 2005], [918.75, 38.2, 13.16, "Hainan", 2005], [3467.72, 143.88, 185.18, "Chongqing", 2005], [7385.1, 286.23, 262.26, "Sichuan", 2005], [2005.42, 76.38, 73.67, "Guizhou", 2005], [3462.73, 148.69, 130.5, "Yunnan", 2005], [248.8, 10.02, 7.57, "Tibet", 2005], [3933.72, 108.62, 127.58, "Shaanxi", 2005], [1933.98, 63.78, 44.73, "Gansu", 2005], [543.32, 14.1, 20.36, "Qinghai", 2005], [612.61, 22.97, 32.25, "Ningxia", 2005], [2604.19, 55.79, 80.34, "Xinjiang", 2005]], [[6033.21, 436.11, 713.79, "Beijing", 2004], [3110.97, 106.14, 136.97, "Tianjin", 2004], [8477.63, 231.08, 209.1, "Hebei", 2004], [3571.37, 95.1, 110.29, "Shanxi", 2004], [3041.07, 73.81, 55.89, "Inner Mongolia", 2004], [6672.0, 203.1, 188.04, "Liaoning", 2004], [3122.01, 97.93, 77.17, "Jilin", 2004], [4750.6, 137.74, 32.2, "Heilongjiang", 2004], [8072.83, 666.3, 612.45, "Shanghai", 2004], [15003.6, 534.17, 440.5, "Jiangsu", 2004], [11648.7, 587.83, 523.49, "Zhejiang", 2004], [4759.3, 188.28, 94.1, "Anhui", 2004], [5763.35, 248.44, 171.0, "Fujian", 2004], [3456.7, 167.2, 65.1, "Jiangxi", 2004], [15021.84, 473.27, 343.37, "Shandong", 2004], [8553.79, 236.44, 170.82, "Henan", 2004], [5633.24, 204.8, 118.85, "Hubei", 2004], [5641.94, 191.5, 118.64, "Hunan", 2004], [18864.62, 1103.75, 602.68, "Guangdong", 2004], [3433.5, 122.52, 74.0, "Guangxi", 2004], [819.66, 30.64, 11.56, "Hainan", 2004], [3034.58, 129.12, 162.38, "Chongqing", 2004], [6379.63, 264.3, 236.5, "Sichuan", 2004], [1677.8, 68.3, 60.3, "Guizhou", 2004], [3081.91, 116.54, 118.4, "Yunnan", 2004], [220.34, 5.8, 5.4, "Tibet", 2004], [3175.58, 95.9, 90.1, "Shaanxi", 2004], [1688.49, 56.84, 42.99, "Gansu", 2004], [466.1, 13.0, 19.0, "Qinghai", 2004], [537.11, 20.78, 27.92, "Ningxia", 2004], [2209.09, 53.55, 70.3, "Xinjiang", 2004]], [[5007.21, 341.88, 635.56, "Beijing", 2003], [2578.03, 92.31, 112.79, "Tianjin", 2003], [6921.29, 185.19, 199.87, "Hebei", 2003], [2855.23, 78.73, 118.48, "Shanxi", 2003], [2388.38, 61.05, 55.89, "Inner Mongolia", 2003], [6002.54, 188.49, 145.38, "Liaoning", 2003], [2662.08, 91.99, 73.15, "Jilin", 2003], [4057.4, 127.2, 32.2, "Heilongjiang", 2003], [6694.23, 487.82, 517.97, "Shanghai", 2003], [12442.87, 447.47, 392.11, "Jiangsu", 2003], [9705.02, 473.16, 451.54, "Zhejiang", 2003], [3923.11, 162.63, 87.45, "Anhui", 2003], [4983.67, 215.84, 150.09, "Fujian", 2003], [2807.41, 138.02, 64.31, "Jiangxi", 2003], [12078.15, 418.21, 329.71, "Shandong", 2003], [6867.7, 217.58, 165.11, "Henan", 2003], [4757.45, 176.8, 107.31, "Hubei", 2003], [4659.99, 186.49, 99.35, "Hunan", 2003], [15844.64, 955.66, 534.28, "Guangdong", 2003], [2821.11, 100.93, 61.59, "Guangxi", 2003], [713.96, 25.14, 10.68, "Hainan", 2003], [2555.72, 113.69, 147.04, "Chongqing", 2003], [5333.09, 231.72, 206.24, "Sichuan", 2003], [1426.34, 59.86, 48.01, "Guizhou", 2003], [2556.02, 103.79, 105.48, "Yunnan", 2003], [185.09, 4.35, 4.74, "Tibet", 2003], [2587.72, 83.9, 77.87, "Shaanxi", 2003], [1399.83, 48.09, 42.31, "Gansu", 2003], [390.2, 11.41, 17.98, "Qinghai", 2003], [445.36, 16.85, 24.8, "Ningxia", 2003], [1886.35, 47.84, 64.92, "Xinjiang", 2003]], [[4315.0, 298.02, 561.91, "Beijing", 2002], [2150.76, 73.04, 76.86, "Tianjin", 2002], [6018.28, 140.89, 179.6, "Hebei", 2002], [2324.8, 65.83, 124.1, "Shanxi", 2002], [1940.94, 51.48, 48.39, "Inner Mongolia", 2002], [5458.22, 130.94, 137.18, "Liaoning", 2002], [2348.54, 76.11, 75.45, "Jilin", 2002], [3637.2, 118.7, 31.6, "Heilongjiang", 2002], [5741.03, 384.86, 485.25, "Shanghai", 2002], [10606.85, 371.09, 368.86, "Jiangsu", 2002], [8003.67, 360.63, 347.53, "Zhejiang", 2002], [3519.72, 139.18, 81.85, "Anhui", 2002], [4467.55, 188.09, 138.28, "Fujian", 2002], [2450.48, 125.27, 76.51, "Jiangxi", 2002], [10275.5, 371.13, 310.07, "Shandong", 2002], [6035.48, 199.31, 158.77, "Henan", 2002], [4212.82, 145.17, 96.95, "Hubei", 2002], [4151.54, 165.29, 92.43, "Hunan", 2002], [13502.42, 808.16, 454.65, "Guangdong", 2002], [2523.73, 82.83, 35.86, "Guangxi", 2002], [642.73, 21.45, 10.08, "Hainan", 2002], [2232.86, 90.48, 134.52, "Chongqing", 2002], [4725.01, 210.82, 183.13, "Sichuan", 2002], [1243.43, 53.49, 41.45, "Guizhou", 2002], [2312.82, 95.68, 102.39, "Yunnan", 2002], [162.04, 3.42, 2.81, "Tibet", 2002], [2253.39, 77.68, 67.3, "Shaanxi", 2002], [1232.03, 41.52, 42.08, "Gansu", 2002], [340.65, 9.74, 16.75, "Qinghai", 2002], [377.16, 13.46, 21.45, "Ningxia", 2002], [1612.6, 43.04, 52.18, "Xinjiang", 2002]]]
+            };
+
+            function init(data) {
+                myChart.hideLoading();
+                var itemStyle = {
+                    opacity: 0.8
+                };
+                var sizeFunction = function(x) {
+                    var y = Math.sqrt(x / 5e3) + 0.1;
+                    return y * 80;
+                };
+                var schema = [{
+                    name: 'GDP',
+                    index: 0,
+                    text: 'GDP',
+                    unit: '(Billion Yuan)'
+                }, {
+                    name: 'Estate',
+                    index: 1,
+                    text: 'Real Estate',
+                    unit: '(Billion Yuan)'
+                }, {
+                    name: 'Financial',
+                    index: 2,
+                    text: 'Finance',
+                    unit: '(Billion Yuan)'
+                }, {
+                    name: 'CITY',
+                    index: 3,
+                    text: 'City',
+                    unit: ''
+                }];
+
+                option = {
+                    baseOption: {
+                        timeline: {
+                            axisType: 'category',
+                            orient: 'vertical',
+                            autoPlay: true,
+                            inverse: true,
+                            playInterval: 1000,
+                            left: null,
+                            right: 0,
+                            top: 20,
+                            bottom: 20,
+                            width: 55,
+                            height: null,
+                            lineStyle: {
+                                show: false
+                            },
+                            symbol: 'none',
+                            checkpointStyle: {
+                                borderWidth: 2
+                            },
+                            controlStyle: {
+                                showNextBtn: false,
+                                showPrevBtn: false
+                            },
+                            data: []
+                        },
+                    
+                        title: [{
+                            text: data.timeline[0],
+                            textAlign: 'center',
+                            left: '63%',
+                            top: '55%',
+                            textStyle: {
+                                fontSize: 100,
+                                color: 'rgba(0,0,0,0.7)'
+                            }
+                        }, {
+                            text: 'National Macroeconomic Indicators',
+                            left: 'center',
+                            top: 10,
+                            textStyle: {
+                                fontWeight: 'normal',
+                                fontSize: 20
+                            }
+                        }
+                        ],
+                        tooltip: {
+                            padding: 5,
+                            borderWidth: 1,
+                            formatter: function(obj) {
+                                var value = obj.value;
+                                // prettier-ignore
+                                return schema[3].text + '：' + value[3] + '<br>' + schema[1].text + '：' + value[1] + schema[1].unit + '<br>' + schema[0].text + '：' + value[0] + schema[0].unit + '<br>' + schema[2].text + '：' + value[2] + schema[2].unit + '<br>';
+                            }
+                        },
+                        grid: {
+                            top: 100,
+                            containLabel: true,
+                            left: 30,
+                            right: '110'
+                        },
+                        xAxis: {
+                            type: 'log',
+                            name: 'GDP',
+                            // max: 100000,
+                            min: 1000,
+                            nameGap: 25,
+                            nameLocation: 'middle',
+                            nameTextStyle: {
+                                fontSize: 18
+                            },
+                            splitLine: {
+                                show: false
+                            },
+                            axisLabel: {
+                                formatter: '{value}'
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            name: 'Real Estate',
+                            nameTextStyle: {
+                                fontSize: 18
+                            },
+                            splitLine: {
+                                show: false
+                            },
+                            axisLabel: {
+                                formatter: '{value}'
+
+                            }
+                        },
+                        visualMap: [{
+                            show: false,
+                            dimension: 3,
+                            categories: data.counties,
+                            inRange: {
+                                color: (function() {
+                                    // prettier-ignore
+                                    var colors = ['#51689b', '#ce5c5c', '#fbc357', '#8fbf8f', '#659d84', '#fb8e6a', '#c77288', '#786090', '#91c4c5', '#6890ba'];
+                                    return colors.concat(colors);
+                                }
+                                )()
+                            }
+                        }],
+                        series: [{
+                            type: 'scatter',
+                            itemStyle: itemStyle,
+                            data: data.series[0],
+                            symbolSize: function(val) {
+                                return sizeFunction(val[2]);
+                            }
+                        }],
+                        animationDurationUpdate: 1000,
+                        animationEasingUpdate: 'quinticInOut'
+                    },
+                    options: []
+                };
+                for (var n = 0; n < data.timeline.length; n++) {
+                    option.baseOption.timeline.data.push(data.timeline[n]);
+                    option.options.push({
+                        title: {
+                            show: true,
+                            text: data.timeline[n] + ''
+                        },
+                        series: {
+                            name: data.timeline[n],
+                            type: 'scatter',
+                            itemStyle: itemStyle,
+                            data: data.series[n],
+                            symbolSize: function(val) {
+                                return sizeFunction(val[2]);
+                            }
+                        }
+                    });
+                }
+                myChart.setOption(option);
+            }
+
+            init(data);
+
+            if (option && typeof option === 'object') {
+                myChart.setOption(option);
+            }
+
+            window.addEventListener('resize', myChart.resize);
+        </script>
+    </body>
+</html>
